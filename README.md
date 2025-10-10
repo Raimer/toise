@@ -9,7 +9,8 @@ neutrino fluxes into mean event rates in bins of observable space. These are
 then used to estimate statistical quantities of interest, e.g. the median
 sensitivity to some flux (i.e. 90% upper limit assuming the true flux is zero)
 or the median discovery potential (i.e. the flux level at which the null
-hypothesis would be rejected at 5 sigma in 50% of realizations).
+hypothesis would be rejected at 5 sigma in 50% of realizations). The package is
+described in [J. van Santen et al 2022 JINST 17 T08009](https://iopscience.iop.org/article/10.1088/1748-0221/17/08/T08009&gt).
 
 A [toise](https://en.wikipedia.org/wiki/Toise) is also an archaic French unit of
 length, area, or volume, depending on context. `toise` may also emit projected
