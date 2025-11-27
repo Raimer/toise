@@ -141,7 +141,6 @@ export PYTHONPATH="${PYTHONPATH}:/home/lhaaso/huangtq/package/toise"
 
 # run the script
 conda activate nuflux-env
-export PYTHONPATH="${PYTHONPATH}:/home/lhaaso/huangtq/package/toise"
-# update the path to toise in test.sh
-python test.sh
+# update the path to toise in test_plot.py
+python test_plot.py
 ```
