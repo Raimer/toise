@@ -107,3 +107,41 @@ To find appropriate parameters describing the detector to be studied, producing 
 5. The angular resolution point spread function. If using the default double-Gaussian implementation,
    the fraction of well reconstrucable events and the fraction of poorly reconstructable events with corresponding sigma.
    These angular resolution quantities may be provided energy dependently.
+
+## Beginner's Tutorial 
+
+```sh
+# set up environment
+conda create -n nuflux-env python=3.12 -y
+conda activate nuflux-env
+
+# install dependencies
+conda install conda-forge::photospline
+conda install conda-forge::boost
+pip install nuflux
+## Please install if you don't have
+pip install https://github.com/Raimer/dashi/zipball/master
+pip install tables
+pip install toolz
+pip install matplotlib
+pip install healpy
+pip install numexpr
+pip install scipy
+pip install lazy-object-proxy
+pip install easy-cache
+
+# install toise
+cd /home/lhaaso/huangtq/package  #进入安装toise的文件夹
+git clone https://github.com/Raimer/toise.git
+git checkout -b feature/username origin/develop
+
+cd toise
+pip install -e .
+export PYTHONPATH="${PYTHONPATH}:/home/lhaaso/huangtq/package/toise"
+
+# run the script
+conda activate nuflux-env
+export PYTHONPATH="${PYTHONPATH}:/home/lhaaso/huangtq/package/toise"
+# update the path to toise in test.sh
+python test.sh
+```
