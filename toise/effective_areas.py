@@ -279,9 +279,10 @@ def _interpolate_production_efficiency(
     with tables.open_file(os.path.join(data_dir, "cross_sections", fname)) as hdf:
         for family, anti in itertools.product(flavors, ("", "_bar")):
             h = dashi.histload(hdf, "/nu" + family + anti)
-            edges = [np.log10(h.binedges[0]), h.binedges[1]] + list(
-                map(np.log10, h.binedges[2:])
-            )
+            #h._h_binedges[0][0] = 10**(-np.inf)
+            #h._h_binedges[2][0] = 10**(-np.inf)
+            edges = [np.log10(h._h_binedges[0])[1:-1], h._h_binedges[1][1:-1],
+                    np.log10(h._h_binedges[2])[1:-1]]
             centers = list(map(center, edges))
             newcenters = [
                 centers[0],
@@ -314,9 +315,9 @@ def _interpolate_production_efficiency(
 
             efficiencies.append(10**v)
 
-    return (h.binedges[0], None,) + tuple(
-        h.binedges[2:]
-    ), np.array(efficiencies)
+    return (h._h_binedges[0][1:-1], None,) + tuple([
+            h._h_binedges[2][1:-1]
+            ]), np.array(efficiencies)
 
 
 def _ring_range(nside):
