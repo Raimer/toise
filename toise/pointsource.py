@@ -66,8 +66,26 @@ class PointSource(object):
 
     def spectral_weight(self, e_center, **kwargs):
         gamma_name = "ps_gamma"
-        self._last_params[gamma_name] = kwargs[gamma_name]
-        return (e_center / 1e3) ** (kwargs[gamma_name] + 2)
+        energy_name = 'ps_energy'
+        spectrum_name = "ps_spectrum"
+        if gamma_name in kwargs:
+            self._last_params[gamma_name] = kwargs[gamma_name]
+            return (e_center / 1e3) ** (kwargs[gamma_name] + 2)
+        elif energy_name in kwargs and spectrum_name in kwargs:
+            print('DISCRETE SPECTRUM INTERPOLATION ACTIVE')
+            print('Single flavor neutrino flux in unit 1e-15 GeV^-1 cm^-2 s^-1')
+            print('Neutrino energy range: {} - {} GeV'.format(kwargs[energy_name][0], kwargs[energy_name][-1]))
+            self._last_params[energy_name] = kwargs[energy_name]
+            self._last_params[spectrum_name] = kwargs[spectrum_name]
+            if len(kwargs[energy_name]) != len(kwargs[spectrum_name]):
+                raise ValueError("Spectrum must have same number of energy and flux points")
+            func = interpolate.interp1d(np.log10(kwargs[energy_name]), np.log10(kwargs[spectrum_name]), kind="linear", fill_value="extrapolate")
+            f1 = 10 ** func(np.log10(e_center))
+            f0 = (e_center / 1e3) ** (-2.0)
+            return f1/f0
+        else:
+            print("No spectral weight found for kwargs: {}".format(kwargs))
+            return np.zeros_like(e_center)
 
     def expectations(self, **kwargs):
 
