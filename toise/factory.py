@@ -15,7 +15,7 @@ from . import (
     surfaces,
 )
 from .util import data_dir, defer
-
+print(data_dir)
 
 def make_key(opts, kwargs):
     key = dict(opts.__dict__)
