@@ -81,8 +81,8 @@ class PointSource(object):
                 raise ValueError("Spectrum must have same number of energy and flux points")
             func = interpolate.interp1d(np.log10(kwargs[energy_name]), np.log10(kwargs[spectrum_name]), kind="linear", fill_value="extrapolate")
             f1 = np.zeros(len(e_center))
-            index_emin = index.argmin(np.abs(e_center-kwargs[energy_name][0]))
-            index_emax = index.argmin(np.abs(e_center-kwargs[energy_name][-1]))+1
+            index_emin = np.argmin(np.abs(e_center-kwargs[energy_name][0]))
+            index_emax = np.argmin(np.abs(e_center-kwargs[energy_name][-1]))+1
             f1[index_emin:index_emax] = 10 ** func(np.log10(e_center[index_emin:index_emax]))
             f0 = (e_center / 1e3) ** (-2.0)
             return f1/f0
